@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Healthcare Translation Assistant</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Real-time multilingual translation for healthcare environments">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- PWA Meta Tags -->
+  <meta name="application-name" content="Healthcare Translator">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Healthcare Translator">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Icons and Manifest -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="assets/icons/icon-167x167.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Preload critical resources -->
+  <link rel="dns-prefetch" href="//api.mymemory.translated.net">
+  <link rel="preconnect" href="https://api.mymemory.translated.net" crossorigin>
+
+  <!-- Loading styles to prevent FOUC -->
+  <style>
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-logo {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .loading-text {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-left: 4px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Hide app until Angular loads */
+    app-root {
+      display: none;
+    }
+
+    app-root.loaded {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-logo">
+      <i class="fas fa-stethoscope"></i>
+    </div>
+    <div class="loading-text">Healthcare Translator</div>
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Angular App Root -->
+  <app-root></app-root>
+
+  <!-- Noscript fallback -->
+  <noscript>
+    <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif;">
+      <h1>JavaScript Required</h1>
+      <p>This application requires JavaScript to be enabled in your browser.</p>
+      <p>Please enable JavaScript and reload the page to use the Healthcare Translation Assistant.</p>
+    </div>
+  </noscript>
+
+  <!-- Browser compatibility check -->
+  <script>
+    // Check for required APIs
+    if (!window.speechSynthesis || (!window.SpeechRecognition && !window.webkitSpeechRecognition)) {
+      document.body.innerHTML = `
+        <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif;">
+          <h1>Browser Not Supported</h1>
+          <p>This application requires a modern browser with speech recognition support.</p>
+          <p>Please use Chrome, Safari, or Edge for the best experience.</p>
+        </div>
+      `;
+    } else {
+      // Hide loading screen when Angular is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        const appRoot = document.querySelector('app-root');
+        const loadingScreen = document.getElementById('loading-screen');
+
+        // Check if Angular has loaded
+        const checkAngular = setInterval(function() {
+          if (appRoot && appRoot.children.length > 0) {
+            clearInterval(checkAngular);
+            appRoot.classList.add('loaded');
+            loadingScreen.classList.add('fade-out');
+
+            setTimeout(function() {
+              loadingScreen.style.display = 'none';
+            }, 500);
+          }
+        }, 100);
+
+        // Fallback timeout
+        setTimeout(function() {
+          clearInterval(checkAngular);
+          appRoot.classList.add('loaded');
+          loadingScreen.classList.add('fade-out');
+          setTimeout(function() {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }, 5000);
+      });
+    }
+  </script>
+</body>
+</html>

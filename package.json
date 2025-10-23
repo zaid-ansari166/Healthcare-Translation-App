@@ -1,0 +1,81 @@
+{
+  "name": "healthcare-translation-web-app",
+  "version": "1.0.0",
+  "description": "A real-time, multilingual translation application for healthcare environments built with Angular",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "build:prod": "ng build --configuration production",
+    "serve:prod": "ng serve --configuration production",
+    "analyze": "ng build --stats-json && npx webpack-bundle-analyzer dist/healthcare-translation-web-app/stats.json"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^17.0.0",
+    "@angular/common": "^17.0.0",
+    "@angular/compiler": "^17.0.0",
+    "@angular/core": "^17.0.0",
+    "@angular/forms": "^17.0.0",
+    "@angular/platform-browser": "^17.0.0",
+    "@angular/platform-browser-dynamic": "^17.0.0",
+    "@angular/router": "^17.0.0",
+    "@angular/service-worker": "^17.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^17.0.0",
+    "@angular/cli": "^17.0.0",
+    "@angular/compiler-cli": "^17.0.0",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^18.18.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.42.0",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.2.0"
+  },
+  "keywords": [
+    "angular",
+    "healthcare",
+    "translation",
+    "medical",
+    "speech-recognition",
+    "text-to-speech",
+    "multilingual",
+    "patient-communication",
+    "web-app",
+    "typescript"
+  ],
+  "author": "Healthcare Translation Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/healthcare-translation-web-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/healthcare-translation-web-app/issues"
+  },
+  "homepage": "https://github.com/your-username/healthcare-translation-web-app#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ]
+}
