@@ -16,8 +16,6 @@
 *.njsproj
 *.sln
 
-# Environment files
-src/environments/environment*.ts
 
 # Logs
 npm-debug.log*
